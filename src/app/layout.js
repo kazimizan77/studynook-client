@@ -1,6 +1,7 @@
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       <body className="bg-[#F8F5EE] dark:bg-[#0d2137] font-[family-name:var(--font-dm-sans)]">
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
