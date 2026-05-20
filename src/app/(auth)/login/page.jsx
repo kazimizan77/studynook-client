@@ -37,10 +37,7 @@ export default function LoginPage() {
     <div className="min-h-[calc(100vh-64px)] bg-[#F8F5EE] dark:bg-[#0d2137] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="flex justify-center mb-8">
-          <Link
-            href="/"
-            className="font-[family-name:var(--font-cormorant)] text-3xl font-semibold tracking-tight"
-          >
+          <Link href="/" className="font-(family-name:--font-cormorant) text-3xl font-semibold tracking-tight">
             <span className="text-[#1B3A4B] dark:text-white">Study</span>
             <span className="text-[#2D6A4F]">Nook</span>
           </Link>
@@ -50,7 +47,7 @@ export default function LoginPage() {
           <span className="text-xs font-semibold uppercase tracking-widest text-[#2D6A4F]">
             Welcome back
           </span>
-          <h1 className="font-[family-name:var(--font-cormorant)] text-2xl font-semibold text-[#1B3A4B] dark:text-white mt-1 mb-1">
+          <h1 className="font-(family-name:--font-cormorant) text-2xl font-semibold text-[#1B3A4B] dark:text-white mt-1 mb-1">
             Sign in to StudyNook
           </h1>
           <p className="text-sm text-[#7a9aaa] mb-7">

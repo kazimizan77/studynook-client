@@ -46,7 +46,7 @@ export default function RegisterPage() {
         <div className="flex justify-center mb-8">
           <Link
             href="/"
-            className="font-[family-name:var(--font-cormorant)] text-3xl font-semibold tracking-tight"
+            className="font-(family-name:--font-cormorant) text-3xl font-semibold tracking-tight"
           >
             <span className="text-[#1B3A4B] dark:text-white">Study</span>
             <span className="text-[#2D6A4F]">Nook</span>
@@ -57,7 +57,7 @@ export default function RegisterPage() {
           <span className="text-xs font-semibold uppercase tracking-widest text-[#2D6A4F]">
             Get started
           </span>
-          <h1 className="font-[family-name:var(--font-cormorant)] text-2xl font-semibold text-[#1B3A4B] dark:text-white mt-1 mb-1">
+          <h1 className="font-(family-name:--font-cormorant) text-2xl font-semibold text-[#1B3A4B] dark:text-white mt-1 mb-1">
             Create your account
           </h1>
           <p className="text-sm text-[#7a9aaa] mb-7">
