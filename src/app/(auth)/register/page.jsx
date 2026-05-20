@@ -2,9 +2,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button, Input } from "@heroui/react";
+import { Button } from "@heroui/react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+import { authClient } from "@/lib/auth-client";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -15,14 +16,28 @@ export default function RegisterPage() {
     setLoading(true);
     const name = e.target.name.value;
     const email = e.target.email.value;
+    const image = e.target.image.value;
     const password = e.target.password.value;
+
+    const { error } = await authClient.signUp.email({
+      name,
+      email,
+      password,
+      image: image || undefined,
+    });
+
+    if (error) {
+      toast.error(error.message || "Registration failed!");
+      setLoading(false);
+      return;
+    }
 
     toast.success("Account created successfully!");
     router.push("/");
-    setLoading(false);
   };
 
   const handleGoogle = async () => {
+    await authClient.signIn.social({ provider: "google", callbackURL: "/" });
   };
 
   return (
@@ -50,57 +65,54 @@ export default function RegisterPage() {
           </p>
 
           <form onSubmit={handleRegister} className="flex flex-col gap-4">
-            <Input
-              name="name"
-              type="text"
-              label="Full Name"
-              placeholder="Your Name"
-              variant="bordered"
-              isRequired
-              classNames={{
-                input: "text-[#1B3A4B] dark:text-white",
-                inputWrapper:
-                  "border-[#E9E4D8] dark:border-[#1B3A4B] hover:border-[#2D6A4F] dark:hover:border-[#74C69D]",
-              }}
-            />
-            <Input
-              name="email"
-              type="email"
-              label="Email Address"
-              placeholder="your@email.com"
-              variant="bordered"
-              isRequired
-              classNames={{
-                input: "text-[#1B3A4B] dark:text-white",
-                inputWrapper:
-                  "border-[#E9E4D8] dark:border-[#1B3A4B] hover:border-[#2D6A4F] dark:hover:border-[#74C69D]",
-              }}
-            />
-            <Input
-              name="image"
-              type="url"
-              label="Photo URL"
-              placeholder="https://..."
-              variant="bordered"
-              classNames={{
-                input: "text-[#1B3A4B] dark:text-white",
-                inputWrapper:
-                  "border-[#E9E4D8] dark:border-[#1B3A4B] hover:border-[#2D6A4F] dark:hover:border-[#74C69D]",
-              }}
-            />
-            <Input
-              name="password"
-              type="password"
-              label="Password"
-              placeholder="Min. 6 characters"
-              variant="bordered"
-              isRequired
-              classNames={{
-                input: "text-[#1B3A4B] dark:text-white",
-                inputWrapper:
-                  "border-[#E9E4D8] dark:border-[#1B3A4B] hover:border-[#2D6A4F] dark:hover:border-[#74C69D]",
-              }}
-            />
+            <div>
+              <label className="text-xs font-medium text-[#4a6375] dark:text-[#95b4c8] block mb-1.5">
+                Full Name
+              </label>
+              <input
+                name="name"
+                type="text"
+                required
+                placeholder="Your Name"
+                className="w-full px-4 py-3 rounded-xl border border-[#E9E4D8] dark:border-[#1B3A4B] bg-[#F8F5EE] dark:bg-[#0d2137] text-[#1B3A4B] dark:text-white placeholder:text-[#7a9aaa] text-sm focus:outline-none focus:border-[#2D6A4F] transition-colors"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-medium text-[#4a6375] dark:text-[#95b4c8] block mb-1.5">
+                Email Address
+              </label>
+              <input
+                name="email"
+                type="email"
+                required
+                placeholder="your@email.com"
+                className="w-full px-4 py-3 rounded-xl border border-[#E9E4D8] dark:border-[#1B3A4B] bg-[#F8F5EE] dark:bg-[#0d2137] text-[#1B3A4B] dark:text-white placeholder:text-[#7a9aaa] text-sm focus:outline-none focus:border-[#2D6A4F] transition-colors"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-medium text-[#4a6375] dark:text-[#95b4c8] block mb-1.5">
+                Photo URL{" "}
+                <span className="text-[#7a9aaa] font-normal">(optional)</span>
+              </label>
+              <input
+                name="image"
+                type="url"
+                placeholder="https://..."
+                className="w-full px-4 py-3 rounded-xl border border-[#E9E4D8] dark:border-[#1B3A4B] bg-[#F8F5EE] dark:bg-[#0d2137] text-[#1B3A4B] dark:text-white placeholder:text-[#7a9aaa] text-sm focus:outline-none focus:border-[#2D6A4F] transition-colors"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-medium text-[#4a6375] dark:text-[#95b4c8] block mb-1.5">
+                Password
+              </label>
+              <input
+                name="password"
+                type="password"
+                required
+                placeholder="Min. 8 characters"
+                className="w-full px-4 py-3 rounded-xl border border-[#E9E4D8] dark:border-[#1B3A4B] bg-[#F8F5EE] dark:bg-[#0d2137] text-[#1B3A4B] dark:text-white placeholder:text-[#7a9aaa] text-sm focus:outline-none focus:border-[#2D6A4F] transition-colors"
+              />
+            </div>
 
             <Button
               type="submit"

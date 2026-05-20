@@ -2,9 +2,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button, Input } from "@heroui/react";
+import { Button } from "@heroui/react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+import { authClient } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -16,12 +17,21 @@ export default function LoginPage() {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
+    const { error } = await authClient.signIn.email({ email, password });
+
+    if (error) {
+      toast.error(error.message || "Login failed!");
+      setLoading(false);
+      return;
+    }
+
     toast.success("Welcome back!");
     router.push("/");
-    setLoading(false);
   };
 
-  const handleGoogle = async () => {};
+  const handleGoogle = async () => {
+    await authClient.signIn.social({ provider: "google", callbackURL: "/" });
+  };
 
   return (
     <div className="min-h-[calc(100vh-64px)] bg-[#F8F5EE] dark:bg-[#0d2137] flex items-center justify-center px-4 py-12">
@@ -48,37 +58,37 @@ export default function LoginPage() {
           </p>
 
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
-            <Input
-              name="email"
-              type="email"
-              label="Email Address"
-              placeholder="your@email.com"
-              variant="bordered"
-              isRequired
-              classNames={{
-                input: "text-[#1B3A4B] dark:text-white",
-                inputWrapper:
-                  "border-[#E9E4D8] dark:border-[#1B3A4B] hover:border-[#2D6A4F] dark:hover:border-[#74C69D]",
-              }}
-            />
-            <Input
-              name="password"
-              type="password"
-              label="Password"
-              placeholder="Enter your password"
-              variant="bordered"
-              isRequired
-              classNames={{
-                input: "text-[#1B3A4B] dark:text-white",
-                inputWrapper:
-                  "border-[#E9E4D8] dark:border-[#1B3A4B] hover:border-[#2D6A4F] dark:hover:border-[#74C69D]",
-              }}
-            />
-
-            <div className="text-right -mt-2">
-              <Link href="#" className="text-xs text-[#2D6A4F] hover:underline">
-                Forgot password?
-              </Link>
+            <div>
+              <label className="text-xs font-medium text-[#4a6375] dark:text-[#95b4c8] block mb-1.5">
+                Email Address
+              </label>
+              <input
+                name="email"
+                type="email"
+                required
+                placeholder="your@email.com"
+                className="w-full px-4 py-3 rounded-xl border border-[#E9E4D8] dark:border-[#1B3A4B] bg-[#F8F5EE] dark:bg-[#0d2137] text-[#1B3A4B] dark:text-white placeholder:text-[#7a9aaa] text-sm focus:outline-none focus:border-[#2D6A4F] transition-colors"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-medium text-[#4a6375] dark:text-[#95b4c8] block mb-1.5">
+                Password
+              </label>
+              <input
+                name="password"
+                type="password"
+                required
+                placeholder="Min. 8 characters"
+                className="w-full px-4 py-3 rounded-xl border border-[#E9E4D8] dark:border-[#1B3A4B] bg-[#F8F5EE] dark:bg-[#0d2137] text-[#1B3A4B] dark:text-white placeholder:text-[#7a9aaa] text-sm focus:outline-none focus:border-[#2D6A4F] transition-colors"
+              />
+              <div className="text-right mt-1.5">
+                <Link
+                  href="#"
+                  className="text-xs text-[#2D6A4F] hover:underline"
+                >
+                  Forgot password?
+                </Link>
+              </div>
             </div>
 
             <Button
