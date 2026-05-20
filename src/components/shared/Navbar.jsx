@@ -80,16 +80,16 @@ export default function Navbar() {
                   <Image
                     src={user.image}
                     alt={user.name}
-                    width={36}
-                    height={36}
-                    className="rounded-full object-cover border-2 border-[#2D6A4F]"
+                    width={38}
+                    height={38}
+                    className="rounded-full object-cover border-2 border-[#2D6A4F] flex-shrink-0 aspect-square shadow-sm"
                   />
                 ) : (
-                  <div className="w-9 h-9 rounded-full bg-[#2D6A4F] text-white flex items-center justify-center text-sm font-semibold">
+                  <div className="w-9 h-9 rounded-full bg-[#2D6A4F] text-white flex items-center justify-center text-sm font-semibold flex-shrink-0 aspect-square shadow-sm">
                     {user.name?.charAt(0).toUpperCase()}
                   </div>
                 )}
-                <span className="text-sm text-[#1B3A4B] dark:text-white font-medium">
+                <span className="text-sm text-[#1B3A4B] dark:text-white font-medium tracking-wide">
                   {user.name?.split(" ")[0]}
                 </span>
               </button>
