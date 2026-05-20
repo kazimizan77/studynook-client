@@ -1,17 +1,2 @@
 @import "tailwindcss";
-
-@theme {
-  /* Fonts */
-  --font-heading: var(--font-cormorant), Georgia, serif;
-  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
-
-  /* Colors */
-  --color-navy:      #0d2137;
-  --color-ocean:     #1B3A4B;
-  --color-forest:    #2D6A4F;
-  --color-mint:      #74C69D;
-  --color-parchment: #F8F5EE;
-  --color-linen:     #E9E4D8;
-  --color-sand:      #C4B9A0;
-  --color-alert:     #B5451B;
-}
+@import "@heroui/styles";
