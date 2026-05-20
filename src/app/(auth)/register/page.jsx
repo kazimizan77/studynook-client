@@ -6,22 +6,24 @@ import { Button, Input } from "@heroui/react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    toast.success("Welcome back!");
+    toast.success("Account created successfully!");
     router.push("/");
     setLoading(false);
   };
 
-  const handleGoogle = async () => {};
+  const handleGoogle = async () => {
+  };
 
   return (
     <div className="min-h-[calc(100vh-64px)] bg-[#F8F5EE] dark:bg-[#0d2137] flex items-center justify-center px-4 py-12">
@@ -38,16 +40,29 @@ export default function LoginPage() {
 
         <div className="bg-white dark:bg-[#152a3a] border border-[#E9E4D8] dark:border-[#1B3A4B] rounded-2xl p-8 shadow-sm">
           <span className="text-xs font-semibold uppercase tracking-widest text-[#2D6A4F]">
-            Welcome back
+            Get started
           </span>
           <h1 className="font-[family-name:var(--font-cormorant)] text-2xl font-semibold text-[#1B3A4B] dark:text-white mt-1 mb-1">
-            Sign in to StudyNook
+            Create your account
           </h1>
           <p className="text-sm text-[#7a9aaa] mb-7">
-            Manage your study room bookings
+            Join StudyNook and start booking study rooms
           </p>
 
-          <form onSubmit={handleLogin} className="flex flex-col gap-4">
+          <form onSubmit={handleRegister} className="flex flex-col gap-4">
+            <Input
+              name="name"
+              type="text"
+              label="Full Name"
+              placeholder="Your Name"
+              variant="bordered"
+              isRequired
+              classNames={{
+                input: "text-[#1B3A4B] dark:text-white",
+                inputWrapper:
+                  "border-[#E9E4D8] dark:border-[#1B3A4B] hover:border-[#2D6A4F] dark:hover:border-[#74C69D]",
+              }}
+            />
             <Input
               name="email"
               type="email"
@@ -62,10 +77,22 @@ export default function LoginPage() {
               }}
             />
             <Input
+              name="image"
+              type="url"
+              label="Photo URL"
+              placeholder="https://..."
+              variant="bordered"
+              classNames={{
+                input: "text-[#1B3A4B] dark:text-white",
+                inputWrapper:
+                  "border-[#E9E4D8] dark:border-[#1B3A4B] hover:border-[#2D6A4F] dark:hover:border-[#74C69D]",
+              }}
+            />
+            <Input
               name="password"
               type="password"
               label="Password"
-              placeholder="Enter your password"
+              placeholder="Min. 6 characters"
               variant="bordered"
               isRequired
               classNames={{
@@ -75,18 +102,12 @@ export default function LoginPage() {
               }}
             />
 
-            <div className="text-right -mt-2">
-              <Link href="#" className="text-xs text-[#2D6A4F] hover:underline">
-                Forgot password?
-              </Link>
-            </div>
-
             <Button
               type="submit"
               isLoading={loading}
-              className="w-full bg-[#2D6A4F] text-white font-medium h-11"
+              className="w-full bg-[#2D6A4F] text-white font-medium h-11 mt-1"
             >
-              Sign In
+              Create Account
             </Button>
           </form>
 
@@ -106,12 +127,12 @@ export default function LoginPage() {
           </Button>
 
           <p className="text-xs text-center text-[#7a9aaa] mt-6">
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <Link
-              href="/register"
+              href="/login"
               className="text-[#2D6A4F] font-semibold hover:underline"
             >
-              Register here
+              Sign in here
             </Link>
           </p>
         </div>
