@@ -24,7 +24,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}>
-      <body className="bg-[#F8F5EE] dark:bg-[#0d2137] font-(family-name:--font-dm-sans)">
+      <body className="bg-[#F8F5EE] font-(family-name:--font-dm-sans)">
         <Navbar />
         {children}
         <Footer />
