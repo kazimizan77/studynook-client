@@ -75,7 +75,7 @@ export default async function LatestRooms() {
             <span className="text-xs font-semibold uppercase tracking-widest text-[#2D6A4F] block mb-2">
               Newly Added
             </span>
-            <h2 className="font-[family-name:var(--font-cormorant)] text-4xl font-semibold text-[#1B3A4B] dark:text-white">
+            <h2 className="font-(family-name:--font-cormorant) text-4xl font-semibold text-[#1B3A4B] dark:text-white">
               Latest Study Rooms
             </h2>
           </div>
