@@ -29,7 +29,7 @@ function RoomCard({ room }) {
         </div>
       </div>
       <div className="p-5">
-        <h3 className="font-[family-name:var(--font-cormorant)] text-xl font-semibold text-[#1B3A4B] mb-1">
+        <h3 className="font-(family-name:--font-cormorant) text-xl font-semibold text-[#1B3A4B] mb-1">
           {room.name}
         </h3>
         <p className="text-xs text-[#7a9aaa] mb-3">
@@ -96,13 +96,12 @@ export default function RoomsClient() {
 
   return (
     <div className="min-h-[calc(100vh-64px)] bg-[#F8F5EE]">
-      {/* Page Title */}
       <div className="bg-[#0d2137] py-12 px-6">
         <div className="max-w-7xl mx-auto">
           <span className="text-xs font-semibold uppercase tracking-widest text-[#74C69D] block mb-2">
             Explore
           </span>
-          <h1 className="font-[family-name:var(--font-cormorant)] text-4xl font-semibold text-white">
+          <h1 className="font-(family-name:--font-cormorant) text-4xl font-semibold text-white">
             All Study Rooms
           </h1>
           <p className="text-[#95b4c8] text-sm mt-2">
@@ -112,9 +111,7 @@ export default function RoomsClient() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-10">
-        {/* Filters */}
         <div className="bg-white border border-[#E9E4D8] rounded-2xl p-5 mb-8 flex flex-col md:flex-row gap-4">
-          {/* Search */}
           <div className="flex-1 relative">
             <svg
               className="absolute left-3 top-1/2 -translate-y-1/2 text-[#7a9aaa] w-4 h-4"
@@ -138,7 +135,6 @@ export default function RoomsClient() {
             />
           </div>
 
-          {/* Amenity Filter */}
           <select
             value={selectedAmenity}
             onChange={(e) => setSelectedAmenity(e.target.value)}
@@ -152,7 +148,6 @@ export default function RoomsClient() {
             ))}
           </select>
 
-          {/* Clear */}
           {(search || selectedAmenity) && (
             <button
               onClick={() => {
@@ -166,14 +161,12 @@ export default function RoomsClient() {
           )}
         </div>
 
-        {/* Results count */}
         <p className="text-sm text-[#7a9aaa] mb-6">
           Showing{" "}
           <span className="font-medium text-[#1B3A4B]">{rooms.length}</span>{" "}
           rooms
         </p>
 
-        {/* Grid */}
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (

@@ -42,6 +42,7 @@ export default function AddRoomPage() {
     }
 
     setLoading(true);
+
     const formData = {
       name: e.target.name.value,
       floor: e.target.floor.value,
@@ -54,9 +55,15 @@ export default function AddRoomPage() {
     };
 
     try {
-      const res = await fetch("/api/rooms", {
+      const tokenRes = await fetch("/api/token");
+      const { token } = await tokenRes.json();
+
+      const res = await fetch("http://localhost:5000/api/rooms", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(formData),
       });
 
