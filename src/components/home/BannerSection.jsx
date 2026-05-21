@@ -5,12 +5,10 @@ import { Button } from "@heroui/react";
 export default function BannerSection() {
   return (
     <section className="relative bg-[#0d2137] overflow-hidden">
-      {/* Background glow */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#2D6A4F]/20 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#1B3A4B]/40 rounded-full blur-2xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 grid md:grid-cols-2 gap-12 items-center">
-        {/* Left */}
         <div>
           <span className="text-xs font-semibold uppercase tracking-widest text-[#74C69D] mb-4 block">
             University Library Network · Est. 2025
@@ -41,7 +39,6 @@ export default function BannerSection() {
           </div>
         </div>
 
-        {/* Right — Stats */}
         <div className="flex flex-col gap-4 md:items-end">
           {[
             { num: "300+", label: "Rooms Listed" },
