@@ -19,20 +19,23 @@ export default function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    const { error } = await authClient.signIn.email({ email, password });
-
-    if (error) {
-      toast.error(error.message || "Login failed!");
-      setLoading(false);
-      return;
-    }
-
-    toast.success("Welcome back!");
-    router.push("/");
+    const { error } = await authClient.signIn.email(
+      { email, password },
+      {
+        onSuccess: () => {
+          toast.success("Welcome back!");
+          router.push("/");
+          router.refresh();
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message || "Login failed!");
+          setLoading(false);
+        },
+      },
+    );
   };
 
   const handleGoogle = async () => {
