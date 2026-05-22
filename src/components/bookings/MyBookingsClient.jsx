@@ -32,7 +32,6 @@ function BookingCard({ booking, onCancel }) {
       }`}
     >
       <div className="flex flex-col sm:flex-row">
-        {/* Image */}
         <div className="relative w-full sm:w-48 h-40 sm:h-auto flex-shrink-0">
           {booking.roomImage ? (
             <Image
@@ -57,10 +56,9 @@ function BookingCard({ booking, onCancel }) {
           </div>
         </div>
 
-        {/* Details */}
         <div className="flex-1 p-5 flex flex-col justify-between">
           <div>
-            <h3 className="font-[family-name:var(--font-cormorant)] text-xl font-semibold text-[#1B3A4B] mb-2">
+            <h3 className="font-(family-name:--font-cormorant) text-xl font-semibold text-[#1B3A4B] mb-2">
               {booking.roomName}
             </h3>
             <div className="flex flex-wrap gap-4 text-sm text-[#4a6375]">
@@ -115,9 +113,12 @@ export default function MyBookingsClient() {
       const tokenRes = await fetch("/api/token");
       const { token } = await tokenRes.json();
 
-      const res = await fetch("http://localhost:5000/api/bookings/my", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/bookings/my`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       const data = await res.json();
       setBookings(data);
     } catch {
@@ -135,7 +136,7 @@ export default function MyBookingsClient() {
       const { token } = await tokenRes.json();
 
       const res = await fetch(
-        `http://localhost:5000/api/bookings/${bookingId}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/bookings/${bookingId}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
@@ -178,7 +179,6 @@ export default function MyBookingsClient() {
 
   return (
     <div className="min-h-[calc(100vh-64px)] bg-[#F8F5EE]">
-      {/* Header */}
       <div className="bg-[#0d2137] py-12 px-6">
         <div className="max-w-4xl mx-auto">
           <span className="text-xs font-semibold uppercase tracking-widest text-[#74C69D] block mb-2">
@@ -194,7 +194,6 @@ export default function MyBookingsClient() {
       </div>
 
       <div className="max-w-4xl mx-auto px-6 py-10">
-        {/* Stats */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           {[
             { label: "Total", value: bookings.length, color: "text-[#1B3A4B]" },
@@ -225,7 +224,6 @@ export default function MyBookingsClient() {
           ))}
         </div>
 
-        {/* Bookings List */}
         {loading ? (
           <div className="space-y-4">
             {[...Array(3)].map((_, i) => (

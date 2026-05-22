@@ -3,9 +3,12 @@ import Image from "next/image";
 
 async function getRooms() {
   try {
-    const res = await fetch("http://localhost:5000/api/rooms?limit=6", {
-      cache: "no-store",
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/rooms?limit=6`,
+      {
+        cache: "no-store",
+      },
+    );
     if (!res.ok) return [];
     return await res.json();
   } catch {

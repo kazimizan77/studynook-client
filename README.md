@@ -1,36 +1,197 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# StudyNook 📚
 
-## Getting Started
+A modern library study room booking platform built with Next.js and Express.js.
 
-First, run the development server:
+![StudyNook](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-38bdf8?style=flat-square&logo=tailwindcss)
+![HeroUI](https://img.shields.io/badge/HeroUI-v3-blue?style=flat-square)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=flat-square&logo=mongodb)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🌐 Live Demo
+
+- **Client:** [studynook.vercel.app](https://studynook.vercel.app)
+- **Server:** [studynook-server.onrender.com](https://studynook-server.onrender.com)
+
+---
+
+## ✨ Features
+
+- 🔐 **Authentication** — Email/password + Google OAuth via Better Auth
+- 🏠 **Browse Rooms** — Search by name, filter by amenities
+- 📅 **Book a Room** — Time slot booking with conflict prevention
+- ✏️ **Manage Listings** — Add, edit, delete your own rooms
+- 📋 **My Bookings** — View and cancel your bookings
+- 🔒 **Protected Routes** — JWT-based API security
+- 📱 **Responsive** — Mobile-first design
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend (Client)
+| Technology | Purpose |
+|-----------|---------|
+| Next.js 16 | React framework with App Router |
+| Tailwind CSS v4 | Utility-first styling |
+| HeroUI v3 | UI component library |
+| Better Auth | Authentication (Email + Google OAuth) |
+| React Hot Toast | Toast notifications |
+
+### Backend (Server)
+| Technology | Purpose |
+|-----------|---------|
+| Express.js | REST API server |
+| MongoDB + Mongoose | Database |
+| JSON Web Token | API route protection |
+| Nodemon | Development server |
+
+---
+
+## 📁 Project Structure
+
+```
+studynook-client/
+├── src/
+│   ├── app/
+│   │   ├── (auth)/
+│   │   │   ├── login/
+│   │   │   └── register/
+│   │   ├── (main)/
+│   │   │   ├── page.jsx          # Homepage
+│   │   │   ├── rooms/            # All Rooms + Room Details
+│   │   │   ├── add-room/         # Add Room form
+│   │   │   └── my-bookings/      # User bookings
+│   │   ├── api/
+│   │   │   ├── auth/[...all]/    # Better Auth handler
+│   │   │   └── token/            # JWT token generator
+│   │   └── not-found.jsx         # 404 page
+│   ├── components/
+│   │   ├── shared/               # Navbar, Footer
+│   │   ├── home/                 # Homepage sections
+│   │   ├── rooms/                # Room components
+│   │   └── bookings/             # Booking components
+│   └── lib/
+│       ├── auth.js               # Better Auth config
+│       ├── auth-client.js        # Auth client
+│       └── db.js                 # MongoDB connection
+
+studynook-server/
+├── controllers/
+│   ├── room.controller.js
+│   └── booking.controller.js
+├── middleware/
+│   └── verifyToken.js
+├── models/
+│   ├── Room.js
+│   └── Booking.js
+├── routes/
+│   ├── room.routes.js
+│   └── booking.routes.js
+└── index.js
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🚀 Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Prerequisites
+- Node.js 18+
+- MongoDB Atlas account
+- Google OAuth credentials
 
-## Learn More
+### Client Setup
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/studynook-client.git
+cd studynook-client
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Install dependencies
+npm install
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Set up environment variables
+cp .env.example .env.local
+```
 
-## Deploy on Vercel
+Add the following to `.env.local`:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```env
+BETTER_AUTH_URL=http://localhost:3000
+NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
+BETTER_AUTH_SECRET=your-secret-here
+MONGODB_URI=your-mongodb-uri
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+JWT_SECRET=your-jwt-secret
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Run development server
+npm run dev
+```
+
+### Server Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/studynook-server.git
+cd studynook-server
+
+# Install dependencies
+npm install
+```
+
+Add the following to `.env`:
+
+```env
+PORT=5000
+MONGODB_URI=your-mongodb-uri
+JWT_SECRET=your-jwt-secret
+CLIENT_URL=http://localhost:3000
+```
+
+```bash
+# Run development server
+npm run dev
+```
+
+---
+
+## 🔗 API Endpoints
+
+### Rooms
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/api/rooms` | ❌ | Get all rooms (with search & filter) |
+| GET | `/api/rooms/:id` | ❌ | Get room by ID |
+| POST | `/api/rooms` | ✅ | Create a new room |
+| PUT | `/api/rooms/:id` | ✅ | Update room (owner only) |
+| DELETE | `/api/rooms/:id` | ✅ | Delete room (owner only) |
+
+### Bookings
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `/api/bookings` | ✅ | Create a booking |
+| GET | `/api/bookings/my` | ✅ | Get my bookings |
+| DELETE | `/api/bookings/:id` | ✅ | Cancel a booking |
+
+---
+
+## 📸 Screenshots
+
+| Homepage | Rooms | Room Details |
+|----------|-------|--------------|
+| ![Home](./public/screenshots/home.png) | ![Rooms](./public/screenshots/rooms.png) | ![Details](./public/screenshots/details.png) |
+
+---
+
+## 👨‍💻 Author
+
+**Kazi Md Mizanur Rahman**
+- GitHub: [@yourusername](https://github.com/yourusername)
+
+---
+
+## 📄 License
+
+This project is for educational purposes — Assignment 09, Milestone 09.

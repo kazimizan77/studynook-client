@@ -79,7 +79,7 @@ export default function RoomsClient() {
       if (selectedAmenity) params.append("amenity", selectedAmenity);
 
       const res = await fetch(
-        `http://localhost:5000/api/rooms?${params.toString()}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/rooms?${params.toString()}`,
       );
       const data = await res.json();
       setRooms(data);

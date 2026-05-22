@@ -55,14 +55,17 @@ function EditRoomForm({ room, onSuccess, onClose }) {
       const tokenRes = await fetch("/api/token");
       const { token } = await tokenRes.json();
 
-      const res = await fetch(`http://localhost:5000/api/rooms/${room._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/rooms/${room._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
         },
-        body: JSON.stringify(formData),
-      });
+      );
 
       const data = await res.json();
       if (!res.ok) {
@@ -223,7 +226,10 @@ export default function RoomDetailsClient({ id }) {
   useEffect(() => {
     const fetchRoom = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/rooms/${id}`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/rooms/${id}`,
+        );
+
         const data = await res.json();
         setRoom(data);
       } catch {
@@ -250,10 +256,13 @@ export default function RoomDetailsClient({ id }) {
     try {
       const tokenRes = await fetch("/api/token");
       const { token } = await tokenRes.json();
-      const res = await fetch(`http://localhost:5000/api/rooms/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/rooms/${id}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       if (!res.ok) {
         toast.error("Failed to delete room!");
         setDeleting(false);
@@ -293,18 +302,21 @@ export default function RoomDetailsClient({ id }) {
       const tokenRes = await fetch("/api/token");
       const { token } = await tokenRes.json();
 
-      const res = await fetch("http://localhost:5000/api/bookings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/bookings`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            roomId: id,
+            startTime: startDateTime,
+            endTime: endDateTime,
+          }),
         },
-        body: JSON.stringify({
-          roomId: id,
-          startTime: startDateTime,
-          endTime: endDateTime,
-        }),
-      });
+      );
 
       const data = await res.json();
 
