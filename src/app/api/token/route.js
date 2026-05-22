@@ -1,24 +1,29 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import jwt from "jsonwebtoken";
+import { SignJWT } from "jose";
 
 export async function GET() {
-  const session = await auth.api.getSession({ headers: await headers() });
+  try {
+    const session = await auth.api.getSession({ headers: await headers() });
 
-  if (!session) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
-  }
+    if (!session) {
+      return Response.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-  const token = jwt.sign(
-    {
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+
+    const token = await new SignJWT({
       id: session.user.id,
       name: session.user.name,
       email: session.user.email,
       image: session.user.image,
-    },
-    process.env.JWT_SECRET,
-    { expiresIn: "7d" },
-  );
+    })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("7d")
+      .sign(secret);
 
-  return Response.json({ token });
+    return Response.json({ token });
+  } catch (error) {
+    return Response.json({ error: error.message }, { status: 500 });
+  }
 }
