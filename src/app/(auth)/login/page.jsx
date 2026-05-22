@@ -19,19 +19,29 @@ export default function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    const { error } = await authClient.signIn.email(
-      { email, password },
+    // 👉 Better-Auth-এর অফিসিয়াল কলব্যাক হুক্স ব্যবহার করা হয়েছে
+    await authClient.signIn.email(
       {
+        email,
+        password,
+      },
+      {
+        // লগইন সফল হলে এটি রান করবে
         onSuccess: () => {
-          toast.success("Welcome back!");
-          router.push("/");
-          router.refresh();
+          toast.success("Welcome back 👋");
+
+          setTimeout(() => {
+            router.push("/");
+            router.refresh();
+          }, 1200); // টোস্টটি সুন্দরভাবে দেখানোর জন্য ১.২ সেকেন্ড সময় দেওয়া হয়েছে
         },
+        // লগইন ব্যর্থ হলে এটি রান করবে
         onError: (ctx) => {
-          toast.error(ctx.error.message || "Login failed!");
+          toast.error(ctx.error.message || "Login failed ❌");
           setLoading(false);
         },
       },

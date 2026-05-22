@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import { Toaster } from "react-hot-toast";
+import { CheckCircle, XCircle } from "lucide-react";
+
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -28,25 +30,46 @@ export default function RootLayout({ children }) {
       <body className="bg-[#F8F5EE] font-[family-name:var(--font-dm-sans)]">
         <Toaster
           position="top-right"
+          gutter={12}
+          containerStyle={{
+            top: 20,
+            right: 20,
+          }}
           toastOptions={{
-            duration: 3000,
+            duration: 3500,
+
             style: {
-              background: "#1B3A4B",
+              background: "rgba(21, 42, 58, 0.85)",
               color: "#fff",
+              padding: "14px 16px",
+              borderRadius: "14px",
+              backdropFilter: "blur(12px)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              boxShadow:
+                "0 10px 30px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05)",
               fontSize: "14px",
-              borderRadius: "12px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              animation: "toast-in 0.4s ease",
             },
+
             success: {
-              iconTheme: {
-                primary: "#74C69D",
-                secondary: "#fff",
-              },
+              icon: (
+                <CheckCircle
+                  size={18}
+                  className="text-[#74C69D]"
+                />
+              ),
             },
+
             error: {
-              iconTheme: {
-                primary: "#B5451B",
-                secondary: "#fff",
-              },
+              icon: (
+                <XCircle
+                  size={18}
+                  className="text-[#ff6b6b]"
+                />
+              ),
             },
           }}
         />
